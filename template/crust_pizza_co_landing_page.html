@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crust Pizza Co. - Made From Scratch</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#e67320',
+                            orangeHover: '#d16212',
+                            bg: '#f6f3eb',
+                            cardBg: '#181818',
+                            darkText: '#1c1917',
+                            lightText: '#e7e5e4',
+                            muted: '#78716c'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        heading: ['"Oswald"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f6f3eb;
+            color: #1c1917;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#e2ded4 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+        
+        /* Subtle tape style for polaroids */
+        .tape-top {
+            position: relative;
+        }
+        .tape-top::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            width: 70px;
+            height: 24px;
+            background-color: rgba(230, 220, 200, 0.7);
+            border: 1px solid rgba(210, 200, 180, 0.5);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+
+        .tape-corner-left::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -15px;
+            transform: rotate(-35deg);
+            width: 65px;
+            height: 22px;
+            background-color: rgba(235, 225, 205, 0.75);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            z-index: 10;
+        }
+
+        .tape-corner-right::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -15px;
+            transform: rotate(-30deg);
+            width: 65px;
+            height: 22px;
+            background-color: rgba(235, 225, 205, 0.75);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            z-index: 10;
+        }
+
+        /* Stamp Effect */
+        .stamp-circle {
+            border: 3px dashed #e67320;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform: rotate(-8deg);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start antialiased selection:bg-brand-orange selection:text-white">
+
+    <!-- MAIN WRAPPER CONTAINER (Centered with Max Width matching the image structure) -->
+    <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+        <!-- HEADER / NAVIGATION -->
+        <header class="w-full py-4 mb-6 flex flex-wrap items-center justify-between border-b border-stone-200/60 pb-4 gap-y-4">
+            <!-- Left Nav -->
+            <nav class="flex items-center space-x-4 md:space-x-6 text-xs sm:text-sm font-bold tracking-wider uppercase">
+                <a href="#home" class="bg-brand-orange text-white px-3 py-1.5 rounded hover:bg-brand-orangeHover transition-colors">HOME</a>
+                <a href="#menu" class="hover:text-brand-orange transition-colors">MENU</a>
+                <a href="#about" class="hover:text-brand-orange transition-colors">CATERING</a>
+                <a href="#order" class="hover:text-brand-orange transition-colors hidden sm:inline-block">ORDER ONLINE</a>
+            </nav>
+
+            <!-- Logo Center -->
+            <a href="#" class="flex flex-col items-center group">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-stone-900 flex flex-col items-center justify-center p-1 bg-white shadow-sm group-hover:scale-105 transition-transform duration-300">
+                    <span class="text-[9px] uppercase tracking-widest text-stone-500 font-bold -mb-1">EST. 2012</span>
+                    <span class="font-heading font-extrabold text-base sm:text-lg leading-none tracking-tight text-stone-900 text-center">CRUST</span>
+                    <span class="text-[8px] uppercase tracking-widest font-bold text-brand-orange -mt-0.5">PIZZA CO.</span>
+                </div>
+            </a>
+
+            <!-- Right Nav -->
+            <div class="flex items-center space-x-3 sm:space-x-5 text-xs sm:text-sm font-bold tracking-wider uppercase">
+                <a href="#about" class="hover:text-brand-orange transition-colors hidden md:inline-block">ABOUT</a>
+                <a href="#contact" class="hover:text-brand-orange transition-colors">CONTACT</a>
+                
+                <!-- Icons -->
+                <button onclick="toggleModal('account-modal')" class="p-1.5 rounded-full hover:bg-stone-200/60 transition-colors" title="Account">
+                    <i class="fa-solid fa-user text-base"></i>
+                </button>
+                <a href="https://twitter.com" target="_blank" class="p-1.5 rounded-full hover:bg-stone-200/60 transition-colors" title="Twitter">
+                    <i class="fa-brands fa-twitter text-base"></i>
+                </a>
+
+                <!-- Call Now Button -->
+                <a href="tel:5550199" class="bg-stone-900 text-white text-xs px-3.5 py-2 rounded-full font-bold hover:bg-stone-800 transition-all flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-phone text-[10px] text-brand-orange"></i>
+                    <span>CALL NOW</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- HERO BANNER SECTION -->
+        <section id="home" class="relative w-full rounded-3xl overflow-hidden shadow-lg mb-12 border border-stone-300/50">
+            <div class="relative h-[380px] sm:h-[460px] md:h-[520px] w-full">
+                <!-- Hero Image -->
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop" 
+                     alt="Fresh Scratch Made Pizzas" 
+                     class="w-full h-full object-cover object-center"
+                     onerror="this.src='https://placehold.co/1200x600/e87722/ffffff?text=Crust+Pizza+Co';" />
+                
+                <!-- Dark Overlay Content Box -->
+                <div class="absolute top-6 left-6 sm:top-10 sm:left-10 max-w-sm sm:max-w-md bg-stone-950/85 backdrop-blur-sm p-6 sm:p-8 rounded-2xl text-white shadow-2xl border border-stone-800">
+                    <h1 class="font-heading text-2xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight mb-3">
+                        FOR DELICIOUS,<br/>MADE-FROM<br/>SCRATCH PIZZAS
+                    </h1>
+                    <p class="text-xs sm:text-sm text-stone-300 mb-6 leading-relaxed font-light">
+                        Hand-kneaded dough, vine-ripened tomato sauce, and 100% real mozzarella cheese baked fresh daily.
+                    </p>
+                    <button onclick="openOrderModal('Scratch Pizza Special')" class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-md uppercase tracking-wider transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+                        <span>Order Online</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR MENU SECTION -->
+        <section id="menu" class="mb-14">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-wide">OUR MENU</h2>
+            </div>
+
+            <!-- Menu Grid (4 Column Layout) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                
+                <!-- Item 1 -->
+                <div class="bg-stone-100/80 rounded-2xl p-3 border border-stone-200 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 rounded-xl overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Chicken Parm Pizza" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                            <span class="absolute bottom-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-full shadow">$14</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg uppercase mb-1">CHICKEN PARM</h3>
+                        <p class="text-xs text-stone-600 line-clamp-2">Crispy chicken, rich marinara sauce, melted mozzarella & fresh basil.</p>
+                    </div>
+                    <button onclick="openOrderModal('Chicken Parm')" class="mt-4 w-full bg-stone-900 hover:bg-brand-orange text-white text-xs font-bold py-2 rounded-lg transition-colors uppercase">
+                        Add To Order
+                    </button>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="bg-stone-100/80 rounded-2xl p-3 border border-stone-200 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 rounded-xl overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Chicken Alfredo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                            <span class="absolute bottom-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-full shadow">$15</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg uppercase mb-1">CHICKEN ALFREDO</h3>
+                        <p class="text-xs text-stone-600 line-clamp-2">Creamy garlic alfredo sauce, grilled chicken breast & toasted parmesan.</p>
+                    </div>
+                    <button onclick="openOrderModal('Chicken Alfredo')" class="mt-4 w-full bg-stone-900 hover:bg-brand-orange text-white text-xs font-bold py-2 rounded-lg transition-colors uppercase">
+                        Add To Order
+                    </button>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="bg-stone-100/80 rounded-2xl p-3 border border-stone-200 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 rounded-xl overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1621996346565-e3d5d6281288?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Spaghetti & Meatballs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                            <span class="absolute bottom-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-full shadow">$13</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg uppercase mb-1">SPAGHETTI & MEATBALLS</h3>
+                        <p class="text-xs text-stone-600 line-clamp-2">Traditional Italian pasta, handmade meatballs in rich Sunday gravy.</p>
+                    </div>
+                    <button onclick="openOrderModal('Spaghetti & Meatballs')" class="mt-4 w-full bg-stone-900 hover:bg-brand-orange text-white text-xs font-bold py-2 rounded-lg transition-colors uppercase">
+                        Add To Order
+                    </button>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="bg-stone-100/80 rounded-2xl p-3 border border-stone-200 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-44 rounded-xl overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Baked Mac & Cheese" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                            <span class="absolute bottom-2 right-2 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-full shadow">$12</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg uppercase mb-1">BAKED MAC & CHEESE</h3>
+                        <p class="text-xs text-stone-600 line-clamp-2">Four-cheese blend, topped with buttered panko breadcrumbs and baked golden.</p>
+                    </div>
+                    <button onclick="openOrderModal('Baked Mac & Cheese')" class="mt-4 w-full bg-stone-900 hover:bg-brand-orange text-white text-xs font-bold py-2 rounded-lg transition-colors uppercase">
+                        Add To Order
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- View Complete Menu CTA -->
+            <div class="text-center">
+                <a href="#full-menu" onclick="alert('Full Menu Drawer / PDF Download initialized!'); return false;" 
+                   class="inline-block bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-xs sm:text-sm px-8 py-3 rounded-lg uppercase tracking-wider shadow transition-all hover:shadow-md">
+                    VIEW OUR COMPLETE MENU
+                </a>
+            </div>
+        </section>
+
+
+        <!-- BRAND INFO / CHICAGO-STYLE SECTION -->
+        <section class="mb-16 py-6 border-y border-stone-300/60">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Title & Text (4 Cols) -->
+                <div class="lg:col-span-4 space-y-4">
+                    <h2 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold uppercase leading-none tracking-tight">
+                        HOME OF THE<br/>CHICAGO-STYLE<br/>THIN CRUST PIZZA
+                    </h2>
+                    <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                        Our signature thin crust is tavern-cut, crispy on the bottom, loaded edge-to-edge with premium toppings and our secret spice-blend tomato sauce.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <a href="#about" class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-xs px-4 py-2.5 rounded uppercase tracking-wider transition-colors">
+                            LEARN MORE
+                        </a>
+                        <a href="#locations" class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold text-xs px-4 py-2.5 rounded uppercase tracking-wider transition-colors">
+                            SEE LOCATIONS
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle Icon Grid 2x3 (4 Cols) -->
+                <div class="lg:col-span-4 grid grid-cols-3 gap-3">
+                    
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-pizza-slice text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">ORDER ONLINE</span>
+                    </div>
+
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-truck-fast text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">CATERING TRUCK</span>
+                    </div>
+
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-store text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">IN-STORE PICKUP</span>
+                    </div>
+
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-clock text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">LUNCH MENU</span>
+                    </div>
+
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-motorcycle text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">FAST DELIVERY</span>
+                    </div>
+
+                    <div class="bg-brand-orange text-white rounded-xl p-3 flex flex-col items-center justify-center text-center aspect-square shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-utensils text-xl sm:text-2xl mb-1"></i>
+                        <span class="text-[10px] sm:text-xs font-bold leading-tight uppercase">PARTY TRAYS</span>
+                    </div>
+
+                </div>
+
+                <!-- Right Polaroid Photos taped to background (4 Cols) -->
+                <div class="lg:col-span-4 flex items-center justify-center relative min-h-[220px] py-4">
+                    <!-- Photo 1 -->
+                    <div class="bg-white p-2.5 pb-6 shadow-md rounded-sm transform -rotate-6 tape-corner-left w-36 sm:w-44 border border-stone-200 z-10 hover:z-20 hover:scale-105 transition-all">
+                        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=400&auto=format&fit=crop" 
+                             alt="Chef Marco" class="w-full h-32 sm:h-36 object-cover mb-2"/>
+                        <p class="text-[10px] text-center font-bold text-stone-700 tracking-wider uppercase">Head Chef Marco</p>
+                    </div>
+
+                    <!-- Photo 2 (Overlapping) -->
+                    <div class="bg-white p-2.5 pb-6 shadow-md rounded-sm transform rotate-6 tape-corner-right w-36 sm:w-44 border border-stone-200 -ml-8 mt-6 z-0 hover:z-20 hover:scale-105 transition-all">
+                        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=400&auto=format&fit=crop" 
+                             alt="Kitchen Team" class="w-full h-32 sm:h-36 object-cover mb-2"/>
+                        <p class="text-[10px] text-center font-bold text-stone-700 tracking-wider uppercase">Our Kitchen Crew</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- WAYS TO ENJOY SECTION -->
+        <section class="mb-16">
+            <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-wide mb-6">WAYS TO ENJOY</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                
+                <!-- Left Feature: Circular Pizza with Center Stamp Badge (6 cols) -->
+                <div class="md:col-span-6 relative rounded-3xl overflow-hidden shadow-md group min-h-[320px] sm:min-h-[380px] bg-stone-900 border border-stone-300/40">
+                    <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Pizza Stamp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"/>
+                    
+                    <!-- Circular Stamp overlay at center -->
+                    <div class="absolute inset-0 flex items-center justify-center p-4">
+                        <div class="w-36 h-36 sm:w-44 sm:h-44 stamp-circle bg-white/90 backdrop-blur-md p-2 shadow-2xl flex flex-col items-center justify-center text-center">
+                            <i class="fa-solid fa-crown text-brand-orange text-lg mb-1"></i>
+                            <span class="font-heading text-xl sm:text-2xl font-black text-stone-900 leading-none">CRUST</span>
+                            <span class="text-[9px] font-bold tracking-widest text-brand-orange uppercase">PIZZA CO.</span>
+                            <span class="text-[8px] text-stone-500 font-semibold tracking-tighter mt-1">ALWAYS FRESH</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Feature Cards Stack (6 cols) -->
+                <div class="md:col-span-6 flex flex-col gap-5 justify-between">
+                    
+                    <!-- Card 1 -->
+                    <div class="bg-stone-900 text-white p-6 sm:p-7 rounded-3xl flex-1 flex flex-col justify-between shadow-md border border-stone-800">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-brand-orange flex items-center justify-center mb-4 text-white text-lg">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <h3 class="font-heading text-xl sm:text-2xl font-bold uppercase mb-2 tracking-wide">AWARD-WINNING PIZZA & SERVICE</h3>
+                            <p class="text-xs sm:text-sm text-stone-400 leading-relaxed mb-4">
+                                Voted Chicago's Best Thin Crust 3 years in a row. Experience our quick delivery and unparalleled customer care.
+                            </p>
+                        </div>
+                        <div>
+                            <button onclick="openOrderModal('Award Winning Crust')" class="bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold px-5 py-2.5 rounded-md uppercase tracking-wider transition-colors">
+                                LEARN MORE
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-stone-900 text-white p-6 sm:p-7 rounded-3xl flex-1 flex flex-col justify-between shadow-md border border-stone-800">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-brand-orange flex items-center justify-center mb-4 text-white text-lg">
+                                <i class="fa-solid fa-child text-lg"></i>
+                            </div>
+                            <h3 class="font-heading text-xl sm:text-2xl font-bold uppercase mb-2 tracking-wide">KIDS EAT FREE TUESDAYS!</h3>
+                            <p class="text-xs sm:text-sm text-stone-400 leading-relaxed mb-4">
+                                Treat the whole family! Get one free kid’s personal pizza with every adult large pizza purchase every Tuesday.
+                            </p>
+                        </div>
+                        <div>
+                            <button onclick="openOrderModal('Kids Tuesday Deal')" class="bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold px-5 py-2.5 rounded-md uppercase tracking-wider transition-colors">
+                                VIEW OUR COMPLETE MENU
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- COMMUNITY & INSTAGRAM GRID SECTION -->
+        <section class="mb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Community Column (5 Cols) -->
+                <div class="lg:col-span-5 bg-white/70 p-6 sm:p-8 rounded-3xl border border-stone-200/80 shadow-sm flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-brand-orange tracking-widest uppercase mb-1 block">@yourbrandhandle</span>
+                        <h2 class="font-heading text-2xl sm:text-3xl font-extrabold uppercase leading-tight mb-3">
+                            LET'S WORK TOGETHER FOR OUR COMMUNITY
+                        </h2>
+                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed mb-6">
+                            We proudly sponsor local sports teams, school fundraisers, and neighborhood food drives. Partner with Crust Pizza Co. for your next charity event!
+                        </p>
+                    </div>
+
+                    <!-- Illustration Placeholder -->
+                    <div class="bg-stone-100 rounded-2xl p-4 flex items-center gap-4 border border-stone-200">
+                        <div class="w-16 h-16 rounded-full bg-brand-orange/20 flex items-center justify-center text-brand-orange text-2xl shrink-0">
+                            <i class="fa-solid fa-people-hold"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs uppercase text-stone-900">Fundraising Made Easy</h4>
+                            <p class="text-[11px] text-stone-500">We donate 20% of proceeds back to registered local non-profit organizations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instagram Photo Grid "WHY CHOOSE US" (7 Cols) -->
+                <div class="lg:col-span-7">
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-wide mb-4">WHY CHOOSE US</h2>
+                    
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Pizza Slice" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1510693206972-df098062cb71?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Pasta Cooking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Happy Customers" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Fresh Ingredients" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Dining Room" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?q=80&w=400&auto=format&fit=crop" 
+                                 alt="Takeout Box" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- FRANCHISE / STOREFRONT / SUBMIT A REQUEST SECTION -->
+        <section id="contact" class="mb-14">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                
+                <!-- Left Franchise Card (4 Cols) -->
+                <div class="lg:col-span-4 bg-stone-200/70 p-6 sm:p-7 rounded-3xl border border-stone-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-heading text-xl sm:text-2xl font-extrabold uppercase leading-snug mb-3">
+                            WANT TO OWN YOUR OWN CRUST PIZZA CO.?
+                        </h3>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-6">
+                            Join our growing franchise family. We offer turnkey operations, comprehensive training, and industry-leading marketing support.
+                        </p>
+                    </div>
+                    <div>
+                        <button onclick="toggleModal('request-modal')" class="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-xs py-3 rounded-lg uppercase tracking-wider transition-colors shadow">
+                            SUBMIT A REQUEST
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Middle Storefront Photo (4 Cols) -->
+                <div class="lg:col-span-4 rounded-3xl overflow-hidden shadow-md min-h-[220px] border border-stone-300">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop" 
+                         alt="Crust Pizza Storefront Exterior" class="w-full h-full object-cover"/>
+                </div>
+
+                <!-- Right Request / Quick Actions (4 Cols) -->
+                <div class="lg:col-span-4 bg-stone-100 p-6 sm:p-7 rounded-3xl border border-stone-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-heading text-xl sm:text-2xl font-extrabold uppercase mb-4">
+                            SUBMIT A REQUEST
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <button onclick="alert('Navigating to Locations map...');" class="bg-brand-orange hover:bg-brand-orangeHover text-white p-3 rounded-xl text-center flex flex-col items-center justify-center transition-all shadow-sm">
+                                <i class="fa-solid fa-location-dot text-base mb-1"></i>
+                                <span class="text-[9px] font-bold uppercase leading-tight">LOCATIONS</span>
+                            </button>
+
+                            <button onclick="alert('Opening Gift Cards portal...');" class="bg-brand-orange hover:bg-brand-orangeHover text-white p-3 rounded-xl text-center flex flex-col items-center justify-center transition-all shadow-sm">
+                                <i class="fa-solid fa-gift text-base mb-1"></i>
+                                <span class="text-[9px] font-bold uppercase leading-tight">GIFT CARDS</span>
+                            </button>
+
+                            <button onclick="toggleModal('request-modal')" class="bg-brand-orange hover:bg-brand-orangeHover text-white p-3 rounded-xl text-center flex flex-col items-center justify-center transition-all shadow-sm">
+                                <i class="fa-solid fa-paper-plane text-base mb-1"></i>
+                                <span class="text-[9px] font-bold uppercase leading-tight">RELOCATE</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-stone-500 text-center">Have a specific question or location suggestion? Let us know!</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="w-full border-t border-stone-300/80 pt-8 pb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <!-- Left Logo & Call To Action -->
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full border-2 border-stone-900 flex flex-col items-center justify-center p-1 bg-white">
+                        <span class="font-heading font-black text-xs leading-none">CRUST</span>
+                        <span class="text-[6px] font-bold text-brand-orange uppercase">PIZZA CO.</span>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-sm uppercase tracking-wide">WANT TO PLACE AN ORDER NOW?</h4>
+                        <p class="text-xs text-stone-500">Call your local branch or order online for fast pickup.</p>
+                    </div>
+                </div>
+
+                <!-- Right Navigation Links -->
+                <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-bold uppercase tracking-wider text-stone-700">
+                    <a href="#menu" class="hover:text-brand-orange transition-colors">MENU</a>
+                    <a href="#catering" class="hover:text-brand-orange transition-colors">CATERING</a>
+                    <a href="#careers" onclick="alert('Careers page opening...'); return false;" class="hover:text-brand-orange transition-colors">CAREERS</a>
+                    <a href="#commissions" class="hover:text-brand-orange transition-colors">COMMISSIONS</a>
+                    <a href="#privacy" onclick="alert('Privacy Policy'); return false;" class="hover:text-brand-orange transition-colors">PRIVACY</a>
+                    <a href="#terms" onclick="alert('Terms of Service'); return false;" class="hover:text-brand-orange transition-colors">TERMS</a>
+                </nav>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="mt-8 text-center text-[11px] text-stone-400">
+                &copy; <span id="year"></span> Crust Pizza Co. All rights reserved. Built with precision and passion.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ORDER MODAL INTERACTIVITY -->
+    <div id="order-modal" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative border border-stone-200 animate-fadeIn">
+            <button onclick="toggleModal('order-modal')" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h3 class="font-heading text-2xl font-bold uppercase" id="modal-item-title">ADD TO ORDER</h3>
+                <p class="text-xs text-stone-500">Customize your selection below</p>
+            </div>
+
+            <form onsubmit="handleOrderSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Crust Size</label>
+                    <select class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs font-semibold focus:outline-none focus:border-brand-orange">
+                        <option>12" Medium Thin Crust</option>
+                        <option selected>14" Large Thin Crust (Tavern Cut)</option>
+                        <option>16" Extra Large Thin Crust</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Special Instructions</label>
+                    <textarea rows="2" placeholder="e.g. Extra crispy, light sauce..." class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs focus:outline-none focus:border-brand-orange"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-bold py-3 rounded-xl uppercase text-xs tracking-wider transition-colors shadow">
+                        Confirm & Add To Cart
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FRANCHISE / REQUEST MODAL -->
+    <div id="request-modal" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative border border-stone-200">
+            <button onclick="toggleModal('request-modal')" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <h3 class="font-heading text-2xl font-bold uppercase">SUBMIT A REQUEST</h3>
+                <p class="text-xs text-stone-500">Franchising & Community Partnerships</p>
+            </div>
+
+            <form onsubmit="handleRequestSubmit(event)" class="space-y-3">
+                <div>
+                    <input type="text" placeholder="Your Full Name" required class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs focus:outline-none focus:border-brand-orange"/>
+                </div>
+                <div>
+                    <input type="email" placeholder="Email Address" required class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs focus:outline-none focus:border-brand-orange"/>
+                </div>
+                <div>
+                    <select class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs font-semibold focus:outline-none focus:border-brand-orange">
+                        <option>Franchise Opportunity</option>
+                        <option>Community Event / Sponsorship</option>
+                        <option>General Inquiry</option>
+                    </select>
+                </div>
+                <div>
+                    <textarea rows="3" placeholder="Tell us about your proposal or preferred city..." required class="w-full bg-stone-100 border border-stone-300 rounded-lg p-2.5 text-xs focus:outline-none focus:border-brand-orange"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-bold py-3 rounded-xl uppercase text-xs tracking-wider transition-colors shadow">
+                    Submit Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ACCOUNT / SIGN IN MODAL -->
+    <div id="account-modal" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-xs w-full shadow-2xl relative border border-stone-200 text-center">
+            <button onclick="toggleModal('account-modal')" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-12 h-12 bg-stone-100 text-stone-800 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold uppercase mb-1">CRUST REWARDS</h3>
+            <p class="text-xs text-stone-500 mb-4">Sign in to earn free pizzas!</p>
+
+            <button onclick="alert('Google Sign In initialized'); toggleModal('account-modal');" class="w-full bg-stone-900 text-white font-bold py-2.5 rounded-xl uppercase text-xs mb-2 hover:bg-stone-800 transition-colors">
+                Sign In With Google
+            </button>
+            <button onclick="toggleModal('account-modal')" class="w-full bg-stone-200 text-stone-800 font-bold py-2.5 rounded-xl uppercase text-xs hover:bg-stone-300 transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toggle modal visibility helper
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        // Open order modal with dynamic item title
+        function openOrderModal(itemName) {
+            const titleEl = document.getElementById('modal-item-title');
+            if (titleEl) {
+                titleEl.textContent = itemName;
+            }
+            toggleModal('order-modal');
+        }
+
+        // Form handler simulation
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            alert('Item added to your order cart!');
+            toggleModal('order-modal');
+        }
+
+        function handleRequestSubmit(e) {
+            e.preventDefault();
+            alert('Thank you! Your request has been received by Crust Pizza Co.');
+            toggleModal('request-modal');
+        }
+    </script>
+</body>
+</html>
